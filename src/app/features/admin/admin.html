@@ -1,1 +1,51 @@
-<p>admin works!</p>
+<div class="min-h-screen pt-10 pb-20 px-6 max-w-6xl mx-auto animate-fade-up">
+  <div class="flex justify-between items-end mb-10">
+    <div>
+      <h1 class="text-3xl font-black text-black dark:text-white">Dashboard Admin</h1>
+      <p class="text-[13px] text-gray-500">Vue d'ensemble des ventes de STYFLER 90</p>
+    </div>
+    <button class="btn-secondary">Déconnexion</button>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-12">
+    <div class="bg-gray-50 dark:bg-[#0a0a0a] border border-black/8 dark:border-white/8 rounded-2xl p-6">
+      <div class="text-[11px] font-bold uppercase text-gray-500 mb-1">Ventes totales</div>
+      <div class="text-3xl font-black text-black dark:text-white">142</div>
+    </div>
+    <div class="bg-gray-50 dark:bg-[#0a0a0a] border border-black/8 dark:border-white/8 rounded-2xl p-6">
+      <div class="text-[11px] font-bold uppercase text-gray-500 mb-1">Chiffre d'affaires</div>
+      <div class="text-3xl font-black text-green-600 dark:text-green-400">923 000 FCFA</div>
+    </div>
+    <div class="bg-black dark:bg-white border border-black/8 dark:border-white/8 rounded-2xl p-6 flex flex-col justify-center">
+      <button class="text-[13px] font-bold text-white dark:text-black">+ Ajouter un projet</button>
+    </div>
+  </div>
+
+  <h2 class="text-lg font-black text-black dark:text-white mb-4">Dernières ventes</h2>
+  <div class="bg-white dark:bg-black border border-black/8 dark:border-white/8 rounded-2xl overflow-hidden">
+    <div class="overflow-x-auto">
+      <table class="w-full text-left text-[13px]">
+        <thead class="bg-gray-50 dark:bg-[#0a0a0a] text-gray-500">
+          <tr>
+            <th class="px-6 py-4 font-bold uppercase tracking-widest text-[10px]">Client</th>
+            <th class="px-6 py-4 font-bold uppercase tracking-widest text-[10px]">Album</th>
+            <th class="px-6 py-4 font-bold uppercase tracking-widest text-[10px]">Montant</th>
+            <th class="px-6 py-4 font-bold uppercase tracking-widest text-[10px]">Paiement</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-black/5 dark:divide-white/5">
+          @for (sale of recentSales(); track sale.email) {
+            <tr class="hover:bg-gray-50 dark:hover:bg-white/5 transition-colors text-black dark:text-white">
+              <td class="px-6 py-4 font-medium">{{ sale.email }}</td>
+              <td class="px-6 py-4">{{ sale.album }}</td>
+              <td class="px-6 py-4 font-bold">{{ sale.amount }} FCFA</td>
+              <td class="px-6 py-4">
+                <span class="px-2 py-1 text-[10px] rounded-full font-bold bg-gray-100 dark:bg-gray-800">{{ sale.method }}</span>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

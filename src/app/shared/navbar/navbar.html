@@ -1,1 +1,22 @@
-<p>navbar works!</p>
+<nav class="fixed top-0 left-0 right-0 z-50 bg-white/80 dark:bg-black/80 backdrop-blur-md border-b border-black/8 dark:border-white/8 transition-colors duration-300">
+  <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+    
+    <a routerLink="/" class="text-xl font-black tracking-tighter text-black dark:text-white hover:opacity-70 transition-opacity">
+      LES REPRÉSENTANTS
+    </a>
+
+    <div class="flex items-center gap-6">
+      <a routerLink="/mon-compte" class="text-[13px] font-bold text-gray-500 hover:text-black dark:hover:text-white transition-colors">
+        Mon Compte
+      </a>
+      
+      <button (click)="toggleTheme()" class="w-8 h-8 flex items-center justify-center rounded-full bg-black/5 dark:bg-white/10 text-black dark:text-white hover:scale-110 transition-transform">
+        @if (!isDark()) {
+          <span>🌙</span>
+        } @else {
+          <span>☀️</span>
+        }
+      </button>
+    </div>
+  </div>
+</nav>

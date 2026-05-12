@@ -1,48 +1,85 @@
 @import "tailwindcss";
 
-/* Configuration du mode sombre et des polices */
 @custom-variant dark (&:is(.dark *));
 
 @layer base {
+  html {
+    scroll-behavior: smooth;
+  }
   body {
-    @apply bg-white text-black transition-colors duration-300 antialiased;
+    @apply bg-white text-black antialiased;
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
-  .dark body {
-    @apply bg-black text-white;
+  ::-webkit-scrollbar        { width: 4px; }
+  ::-webkit-scrollbar-track  { background: transparent; }
+  ::-webkit-scrollbar-thumb  { border-radius: 4px; background: rgba(128,128,128,.25); }
+
+  input[type="range"] {
+    -webkit-appearance: none;
+    height: 3px;
+    border-radius: 2px;
+    outline: none;
+    cursor: pointer;
+    background: rgba(0,0,0,.1);
   }
+  .dark input[type="range"] { background: rgba(255,255,255,.1); }
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    background: #000;
+    cursor: pointer;
+  }
+  .dark input[type="range"]::-webkit-slider-thumb { background: #fff; }
 }
 
-/* Tes boutons personnalisés */
 @layer components {
   .btn-primary {
-    @apply inline-flex items-center justify-center px-6 py-3 rounded-full bg-black text-white dark:bg-white dark:text-black font-bold text-[13px] hover:scale-105 transition-transform;
+    @apply inline-flex items-center justify-center gap-2
+           px-6 py-3 rounded-full
+           bg-black text-white dark:bg-white dark:text-black
+           text-[13px] font-bold
+           hover:opacity-80 active:scale-95
+           transition-all duration-200 cursor-pointer;
   }
   .btn-secondary {
-    @apply inline-flex items-center justify-center px-6 py-3 rounded-full bg-white text-black dark:bg-black dark:text-white border border-black/10 dark:border-white/10 font-bold text-[13px] hover:bg-gray-50 dark:hover:bg-white/5 transition-colors;
+    @apply inline-flex items-center justify-center gap-2
+           px-6 py-3 rounded-full
+           bg-transparent text-black dark:text-white
+           border border-black/15 dark:border-white/15
+           text-[13px] font-semibold
+           hover:bg-black/5 dark:hover:bg-white/5
+           active:scale-95 transition-all duration-200 cursor-pointer;
   }
   .btn-ghost {
-    @apply inline-flex items-center justify-center px-6 py-3 font-bold text-[13px] text-gray-500 hover:text-black dark:hover:text-white transition-colors;
+    @apply inline-flex items-center justify-center gap-2
+           px-6 py-3 rounded-full
+           bg-transparent text-black dark:text-white
+           border-2 border-black dark:border-white
+           text-[13px] font-bold
+           hover:bg-black hover:text-white
+           dark:hover:bg-white dark:hover:text-black
+           active:scale-95 transition-all duration-200 cursor-pointer;
   }
 }
 
-/* Tes animations personnalisées */
 @layer utilities {
   @keyframes fadeUp {
     from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
+    to   { opacity: 1; transform: translateY(0); }
   }
   @keyframes pulseDot {
     0%, 100% { opacity: 1; }
-    50% { opacity: 0.3; }
+    50%       { opacity: 0.15; }
   }
   @keyframes bars {
-    0%, 100% { height: 3px; }
-    50% { height: 12px; }
+    0%, 100% { transform: scaleY(0.3); }
+    50%       { transform: scaleY(1); }
   }
-  
-  .animate-fade-up { animation: fadeUp 0.8s ease-out forwards; }
-  .animate-pulse-dot { animation: pulseDot 2s infinite; }
-  .animate-bars-1 { animation: bars 1s infinite ease-in-out; }
-  .animate-bars-2 { animation: bars 1s infinite ease-in-out 0.2s; }
-  .animate-bars-3 { animation: bars 1s infinite ease-in-out 0.4s; }
+
+  .animate-fade-up   { animation: fadeUp 0.6s ease-out both; }
+  .animate-pulse-dot { animation: pulseDot 1.6s ease-in-out infinite; }
+  .animate-bars-1    { animation: bars 0.7s ease-in-out infinite; }
+  .animate-bars-2    { animation: bars 0.7s ease-in-out 0.18s infinite; }
+  .animate-bars-3    { animation: bars 0.7s ease-in-out 0.36s infinite; }
 }

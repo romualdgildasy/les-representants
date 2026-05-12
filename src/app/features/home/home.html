@@ -1,1 +1,147 @@
-<p>home works!</p>
+<section class="relative min-h-screen flex flex-col items-center justify-center bg-white dark:bg-black overflow-hidden">
+  <div class="absolute inset-0 opacity-[0.03] dark:opacity-[0.06]" style="background-image: radial-gradient(circle, #000 1px, transparent 1px); background-size: 32px 32px;"></div>
+  <div class="relative z-10 text-center px-6 max-w-4xl mx-auto animate-fade-up">
+    <div class="inline-flex items-center gap-2 mb-8 border border-black/15 dark:border-white/15 rounded-full px-4 py-1.5">
+      <span class="w-1.5 h-1.5 rounded-full bg-black dark:bg-white animate-pulse-dot"></span>
+      <span class="text-[11px] font-bold uppercase tracking-[.14em] text-black/60 dark:text-white/60">Nouvel album · 2025</span>
+    </div>
+    <h1 class="text-[clamp(52px,10vw,100px)] font-black leading-[.9] tracking-[-3px] text-black dark:text-white mb-6">
+      Feel the<br><em class="not-italic" style="font-style:italic;font-family:Georgia,serif">rhythm</em>
+    </h1>
+    <p class="text-[15px] text-gray-500 dark:text-gray-400 max-w-md mx-auto leading-relaxed mb-10">
+      Un son authentique né au cœur de l'Afrique.<br>Afrobeat, Makossa &amp; Soul fusionnés en 12 titres inédits.
+    </p>
+    <div class="flex items-center justify-center gap-3">
+      <button (click)="playHero()" class="btn-primary group relative overflow-hidden">
+        <span class="relative z-10 flex items-center gap-2">
+          <span>{{ player.isPlaying() ? '⏸' : '▶' }}</span> Écouter l'extrait
+        </span>
+      </button>
+      <a routerLink="/album/ames-libres" class="btn-ghost">Acheter · 6 500 FCFA</a>
+    </div>
+  </div>
+</section>
+
+<section class="border-t border-black/8 dark:border-white/8 bg-gray-50 dark:bg-[#0a0a0a]">
+  <div class="max-w-7xl mx-auto flex flex-col md:flex-row">
+    <div class="md:w-5/12 min-h-80 flex items-center justify-center bg-black dark:bg-white p-12">
+      <div class="w-52 h-52 rounded-2xl bg-white/10 dark:bg-black/10 flex items-center justify-center text-8xl shadow-2xl ring-1 ring-white/20 dark:ring-black/20">🎵</div>
+    </div>
+    <div class="md:w-7/12 p-10 md:p-16 flex flex-col justify-center">
+      <div class="text-[10px] font-bold uppercase tracking-[.16em] text-gray-400 dark:text-gray-500 mb-3">L'album · 2025</div>
+      <h2 class="text-4xl font-black tracking-tight text-black dark:text-white mb-2">Âmes Libres</h2>
+      <div class="text-[13px] text-gray-400 dark:text-gray-500 mb-6">Sorti le 14 février 2025 · 12 titres</div>
+      <p class="text-[14px] text-gray-600 dark:text-gray-400 leading-relaxed mb-8 max-w-md">
+        Trois ans de création. Un voyage musical entre Douala, Paris et Lagos. Cet album raconte l'histoire d'une génération qui refuse les frontières.
+      </p>
+      <div class="flex gap-10 mb-8 pb-8 border-b border-black/8 dark:border-white/8">
+        @for (s of albumStats; track s.label) {
+          <div>
+            <div class="text-2xl font-black text-black dark:text-white">{{ s.val }}</div>
+            <div class="text-[10px] uppercase tracking-widest text-gray-400 dark:text-gray-500 mt-1">{{ s.label }}</div>
+          </div>
+        }
+      </div>
+      <div class="flex gap-3 flex-wrap">
+        <a routerLink="/album/ames-libres" class="btn-primary">Acheter · 6 500 FCFA</a>
+        <button (click)="playHero()" class="btn-secondary">▶ Extrait gratuit</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="py-16 px-6 border-t border-black/8 dark:border-white/8 bg-white dark:bg-black">
+  <div class="max-w-7xl mx-auto">
+    <div class="flex justify-between items-end mb-8">
+      <div>
+        <h2 class="text-2xl font-black tracking-tight text-black dark:text-white">Succès passés</h2>
+        <p class="text-[13px] text-gray-400 dark:text-gray-500 mt-1">Écoute libre — aucun compte requis</p>
+      </div>
+    </div>
+    <div class="flex flex-col md:flex-row border border-black/8 dark:border-white/8 rounded-2xl overflow-hidden">
+      <div class="md:w-5/12 bg-black dark:bg-white p-8 flex flex-col justify-between min-h-[300px]">
+        @if (player.currentTrack()) {
+          <div>
+            <div class="w-16 h-16 rounded-xl bg-white/10 dark:bg-black/10 flex items-center justify-center text-3xl mb-5">{{ player.currentTrack()!.emoji }}</div>
+            <div class="text-xl font-bold text-white dark:text-black leading-tight mb-1">{{ player.currentTrack()!.title }}</div>
+            <div class="text-[13px] text-white/50 dark:text-black/50 mb-6">{{ player.currentTrack()!.album }}</div>
+          </div>
+          <div>
+            <div class="flex items-center gap-4 mb-4">
+              <button (click)="prevHit()" class="text-white/40 hover:text-white dark:text-black/40 dark:hover:text-black text-lg">⏮</button>
+              <button (click)="player.togglePlay()" class="w-11 h-11 rounded-full bg-white text-black dark:bg-black dark:text-white flex items-center justify-center hover:opacity-80 transition-all text-base">{{ player.isPlaying() ? '⏸' : '▶' }}</button>
+              <button (click)="nextHit()" class="text-white/40 hover:text-white dark:text-black/40 dark:hover:text-black text-lg">⏭</button>
+            </div>
+            <div class="h-0.5 bg-white/20 dark:bg-black/20 rounded-full cursor-pointer" (click)="onProgressClick($event)">
+              <div class="h-full bg-white dark:bg-black rounded-full transition-all" [style.width.%]="player.progress()"></div>
+            </div>
+            <div class="flex justify-between mt-1">
+              <span class="text-[10px] text-white/40 dark:text-black/40">{{ player.formatTime(player.currentTime()) }}</span>
+              <span class="text-[10px] text-white/40 dark:text-black/40">{{ player.formatTime(player.duration()) }}</span>
+            </div>
+          </div>
+        } @else {
+          <div class="flex flex-col items-start justify-end h-full">
+            <div class="text-white/30 dark:text-black/30 text-4xl mb-4">♪</div>
+            <div class="text-white dark:text-black font-bold text-lg mb-1">Écoute libre</div>
+            <div class="text-white/50 dark:text-black/50 text-[13px]">Clique sur une piste →</div>
+          </div>
+        }
+      </div>
+      <div class="md:w-7/12 divide-y divide-black/5 dark:divide-white/5 bg-gray-50 dark:bg-[#0a0a0a]">
+        @for (track of music.hits; track track.id; let i = $index) {
+          <div (click)="playHit(track, i)" class="flex items-center gap-3 px-5 py-3.5 cursor-pointer transition-colors duration-150 group" [class.bg-black]="isCurrentHit(track)" [class.dark:bg-white]="isCurrentHit(track)" [class.hover:bg-black/4]="!isCurrentHit(track)" [class.dark:hover:bg-white/4]="!isCurrentHit(track)">
+            <div class="w-5 text-center shrink-0">
+              @if (isCurrentHit(track) && player.isPlaying()) {
+                <div class="flex items-end justify-center gap-0.5 h-3.5">
+                  <div class="w-0.75 bg-white dark:bg-black rounded-sm animate-bars-1"></div>
+                  <div class="w-0.75 bg-white dark:bg-black rounded-sm animate-bars-2"></div>
+                  <div class="w-0.75 bg-white dark:bg-black rounded-sm animate-bars-3"></div>
+                </div>
+              } @else {
+                <span class="text-[11px]" [class.text-white]="isCurrentHit(track)" [class.dark:text-black]="isCurrentHit(track)" [class.text-gray-300]="!isCurrentHit(track)" [class.dark:text-gray-700]="!isCurrentHit(track)">{{ i + 1 }}</span>
+              }
+            </div>
+            <div class="w-9 h-9 rounded-lg shrink-0 flex items-center justify-center text-lg" [class.bg-white/15]="isCurrentHit(track)" [class.dark:bg-black/15]="isCurrentHit(track)" [class.bg-black/6]="!isCurrentHit(track)" [class.dark:bg-white/6]="!isCurrentHit(track)">{{ track.emoji }}</div>
+            <div class="flex-1 min-w-0">
+              <div class="text-[13px] font-medium truncate" [class.text-white]="isCurrentHit(track)" [class.dark:text-black]="isCurrentHit(track)" [class.text-black]="!isCurrentHit(track)" [class.dark:text-white]="!isCurrentHit(track)">{{ track.title }}</div>
+              <div class="text-[11px] truncate mt-0.5" [class.text-white/50]="isCurrentHit(track)" [class.dark:text-black/50]="isCurrentHit(track)" [class.text-gray-400]="!isCurrentHit(track)" [class.dark:text-gray-500]="!isCurrentHit(track)">{{ track.album }}</div>
+            </div>
+            <div class="flex items-center gap-2 shrink-0">
+              <span class="text-[9px] font-bold px-2 py-0.5 rounded-full" [class.bg-white/20]="isCurrentHit(track)" [class.dark:bg-black/20]="isCurrentHit(track)" [class.text-white]="isCurrentHit(track)" [class.dark:text-black]="isCurrentHit(track)" [class.bg-green-100]="!isCurrentHit(track)" [class.dark:bg-green-900]="!isCurrentHit(track)" [class.text-green-700]="!isCurrentHit(track)" [class.dark:text-green-400]="!isCurrentHit(track)">Free</span>
+              <span class="text-[11px]" [class.text-white/50]="isCurrentHit(track)" [class.dark:text-black/50]="isCurrentHit(track)" [class.text-gray-400]="!isCurrentHit(track)">{{ track.duration }}</span>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="py-16 px-6 border-t border-black/8 dark:border-white/8 bg-gray-50 dark:bg-[#0a0a0a]">
+  <div class="max-w-7xl mx-auto">
+    <h2 class="text-2xl font-black tracking-tight text-black dark:text-white mb-8">Discographie</h2>
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+      @for (album of music.discography; track album.id) {
+        <a [routerLink]="['/album', album.id]" class="group bg-white dark:bg-black border border-black/8 dark:border-white/8 rounded-2xl overflow-hidden cursor-pointer hover:border-black/20 dark:hover:border-white/20 hover:-translate-y-1 transition-all duration-200">
+          <div class="aspect-square flex items-center justify-center text-5xl relative bg-black dark:bg-white">
+            <span class="group-hover:scale-110 transition-transform duration-300">{{ album.coverEmoji }}</span>
+            @if (album.isNew) {
+              <div class="absolute top-2 left-2 bg-white dark:bg-black text-black dark:text-white text-[9px] font-black uppercase px-2 py-0.5 rounded-full">New</div>
+            }
+            <div class="absolute top-2 right-2 bg-black/40 dark:bg-white/40 text-white dark:text-black text-[9px] font-bold uppercase px-2 py-0.5 rounded-full backdrop-blur-sm">{{ album.type }}</div>
+          </div>
+          <div class="p-3">
+            <div class="text-[13px] font-bold text-black dark:text-white truncate leading-tight">{{ album.title }}</div>
+            <div class="text-[11px] text-gray-400 dark:text-gray-500 mt-0.5">{{ album.year }} · {{ album.tracksCount }} titres</div>
+            @if (album.price) {
+              <div class="mt-2 text-[11px] font-bold text-black dark:text-white">{{ album.price | number }} FCFA</div>
+            } @else {
+              <div class="mt-2 text-[11px] font-bold text-green-600 dark:text-green-400">Gratuit</div>
+            }
+          </div>
+        </a>
+      }
+    </div>
+  </div>
+</section>
